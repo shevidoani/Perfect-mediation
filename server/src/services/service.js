@@ -28,15 +28,6 @@ class Service {
             return console.log(err);
         }
     }
-
-    // async getByEmail(email) {
-    //     try {
-    //         return this.Repository.getByEmail(email);
-    //     }
-    //     catch (err) {
-    //         return console.log(err);
-    //     }
-    // }
   
     async update(data) {
         try {
