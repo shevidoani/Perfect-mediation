@@ -1,7 +1,7 @@
 const Repository = require('./repository.js');
 const { pool, resultOfRequest } = require('../dbFunctions.js');
 const bcrypt = require('bcrypt');
-
+//fghjkl
 class FilteringRepository extends Repository {
     constructor() {
         super()
