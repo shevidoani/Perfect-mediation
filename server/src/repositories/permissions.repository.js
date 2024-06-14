@@ -1,8 +1,8 @@
 const Repository = require('./repository.js');
 const { pool, resultOfRequest } = require('../dbFunctions.js');
 const bcrypt = require('bcrypt');
-//fghjkl-==
-class FilteringRepository extends Repository {
+
+class PermissionsRepository extends Repository {
     constructor() {
         super()
         this.pool = pool();
@@ -12,8 +12,8 @@ class FilteringRepository extends Repository {
         try {
             const pool = await this.pool;
             const connection = await pool.getConnection();
-            const createFilteringQuery = `INSERT INTO filtering (userId, highPrice, lowPrice, size, city, neighborhood,street) VALUES (?,?, ?, ?,?,?,?)`;
-            const [result] = await connection.query(createFilteringQuery, [data.userId, data.highPrice, data.lowPrice, data.size, data.city, data.neighborhood, data.street]);
+            const createPermissionsQuery = `INSERT INTO permissions (type) VALUES (?)`;
+            const [result] = await connection.query(createPermissionsQuery, [data.type]);
             connection.release();
             if (result.insertId > 0) {
                 return resultOfRequest(false, 0, result.insertId);
@@ -21,7 +21,7 @@ class FilteringRepository extends Repository {
                 return resultOfRequest(true, 0, 0);
             }
         } catch (error) {
-            console.error('Error creating filtering:', error);
+            console.error('Error creating permissions:', error);
             return resultOfRequest(true, 0, 0);
         }
     }
@@ -29,16 +29,16 @@ class FilteringRepository extends Repository {
     async getAll() {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const createFilteringQuery = `SELECT * FROM filtering`;
-        const [result] = await connection.query(createFilteringQuery);
+        const getPermissionsQuery = `SELECT * FROM permissions`;
+        const [result] = await connection.query(getPermissionsQuery);
         return await resultOfRequest(false, 0, 0, result);
     }
 
-    async getById(userId) {
+    async getById(id) {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const createFilteringQuery = `SELECT * FROM filtering where userId = ${userId}`
-        const [result] = await connection.query(createFilteringQuery)
+        const getPermissionsQuery = `SELECT * FROM permissions where id = ${id}`
+        const [result] = await connection.query(getPermissionsQuery)
         if (result.length != 0) {
             return resultOfRequest(false, 0, 0, result)
         }
@@ -50,8 +50,8 @@ class FilteringRepository extends Repository {
     async update(data) {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const createFilteringQuery = `UPDATE filtering SET ? WHERE id = ?`;
-        const [result] = await connection.query(createFilteringQuery, [data, data.id])
+        const updatePermissionsQuery = `UPDATE permissions SET ? WHERE id = ?`;
+        const [result] = await connection.query(updatePermissionsQuery, [data, data.id])
         if (result.affectedRows > 0) {
             return resultOfRequest(false, result.affectedRows, 0)
         }
@@ -60,11 +60,11 @@ class FilteringRepository extends Repository {
         }
     }
 
-    async delete(userId) {
+    async delete(id) {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const createFilteringQuery = `DELETE FROM filtering where userId = ${userId}`
-        const [result] = await connection.query(createFilteringQuery);
+        const deletePermissionsQuery = `DELETE FROM permissions where id = ${id}`
+        const [result] = await connection.query(deletePermissionsQuery);
         if (result.affectedRows > 0) {
             return resultOfRequest(false, result.affectedRows, 0)
         }
@@ -74,7 +74,7 @@ class FilteringRepository extends Repository {
     }
 }
 
-// const yael = new ApatrmentRepository();
-// yael.create({userId:2, price:120000, size:12000, city:"jerusalem",neighborhood:"ramot",street:"ramot"});
+// const yael = new PermissionsRepository();
+// yael.create({'type': 'user'});
 
-module.exports = new FilteringRepository();
+module.exports = new PermissionsRepository();

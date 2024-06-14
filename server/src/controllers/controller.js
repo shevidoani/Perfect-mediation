@@ -48,7 +48,6 @@ class Controller {
         const id = req.params.id;
         const updatedData = req.body;
         try {
-            console.log('היייי תורת השם תמימה!!!!!!!!!!!!');
             const result = await this.service.update(updatedData);
             if (result.affectedRows > 0) {
                 res.status(200).send(`updated successfully`);

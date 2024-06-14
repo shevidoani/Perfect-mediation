@@ -1,8 +1,8 @@
 const Repository = require('./repository.js');
 const { pool, resultOfRequest } = require('../dbFunctions.js');
-//const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
-class UsersRepository extends Repository {
+class UserPermissionsRepository extends Repository {
     constructor() {
         super()
         this.pool = pool();
@@ -12,8 +12,8 @@ class UsersRepository extends Repository {
         try {
             const pool = await this.pool;
             const connection = await pool.getConnection();
-            const createUserQuery = `INSERT INTO users (name, email) VALUES (?, ?)`;
-            const [result] = await connection.query(createUserQuery, [data.name, data.email]);
+            const createUserPermissionsQuery = `INSERT INTO userspermissions (idUser, idPermission) VALUES (?, ?)`;
+            const [result] = await connection.query(createUserPermissionsQuery, [data.idUser, data.idPermission]);
             connection.release();
             if (result.insertId > 0) {
                 return resultOfRequest(false, 0, result.insertId);
@@ -21,7 +21,7 @@ class UsersRepository extends Repository {
                 return resultOfRequest(true, 0, 0);
             }
         } catch (error) {
-            console.error('Error creating user:', error);
+            console.error('Error creating Userpermissions:', error);
             return resultOfRequest(true, 0, 0);
         }
     }
@@ -29,16 +29,16 @@ class UsersRepository extends Repository {
     async getAll() {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const createUserQuery = `SELECT * FROM users`;
-        const [result] = await connection.query(createUserQuery);
+        const getUserPermissionsQuery = `SELECT * FROM userspermissions`;
+        const [result] = await connection.query(getUserPermissionsQuery);
         return await resultOfRequest(false, 0, 0, result);
     }
 
-    async getById(id) {
+    async getByUserId(idUser) {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const createUserQuery = `SELECT * FROM users where id = ${id}`
-        const [result] = await connection.query(createUserQuery)
+        const getUserPermissionsQuery = `SELECT * FROM userspermissions where idUser = ${idUser}`
+        const [result] = await connection.query(getUserPermissionsQuery)
         if (result.length != 0) {
             return resultOfRequest(false, 0, 0, result)
         }
@@ -47,11 +47,11 @@ class UsersRepository extends Repository {
         }
     }
 
-    async getByEmail(email) {
+    async getByPermissionId(idPermission) {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const createUserQuery = `SELECT * FROM users where email = "${email}"`
-        const [result] = await connection.query(createUserQuery);
+        const getUserPermissionsQuery = `SELECT * FROM userspermissions where idPermission = ${idPermission}`
+        const [result] = await connection.query(getUserPermissionsQuery)
         if (result.length != 0) {
             return resultOfRequest(false, 0, 0, result)
         }
@@ -63,8 +63,8 @@ class UsersRepository extends Repository {
     async update(data) {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const createUserQuery = `UPDATE users SET ? WHERE id = ?`;
-        const [result] = await connection.query(createUserQuery, [data, data.id])
+        const updateUserPermissionsQuery = `UPDATE userspermissions SET ? WHERE idUser = ?`;
+        const [result] = await connection.query(updateUserPermissionsQuery, [data, data.idUser])
         if (result.affectedRows > 0) {
             return resultOfRequest(false, result.affectedRows, 0)
         }
@@ -80,7 +80,7 @@ class UsersRepository extends Repository {
     //         connection = await pool.getConnection();
     //         const createUserQuery = `UPDATE users SET ? WHERE id = ?`;
     //         const [result] = await connection.query(createUserQuery, [data, data.id]);
-    
+
     //         if (result.affectedRows > 0) {
     //             return resultOfRequest(false, result.affectedRows, 0);
     //         } else {
@@ -95,13 +95,13 @@ class UsersRepository extends Repository {
     //         }
     //     }
     // }
-    
 
-    async delete(id) {
+
+    async delete(idUser) {
         const pool = await this.pool;
-            const connection = await pool.getConnection();
-        const createUserQuery = `DELETE FROM users where id = ${id}`
-        const [result] = await connection.query(createUserQuery);
+        const connection = await pool.getConnection();
+        const deleteUserPermissionsQuery = `DELETE FROM userspermissions where idUser = ${idUser}`
+        const [result] = await connection.query(deleteUserPermissionsQuery);
         if (result.affectedRows > 0) {
             return resultOfRequest(false, result.affectedRows, 0)
         }
@@ -111,7 +111,7 @@ class UsersRepository extends Repository {
     }
 }
 
-// const yael = new UsersRepository();
-// yael.create({ name: 'yael', email: 'yael@gmail.com'});
+// const yael = new UserPermissionsRepository();
+// yael.create({ 'idUser': 1, 'idPermission': 1 });
 
-module.exports = new UsersRepository();
+module.exports = new UserPermissionsRepository();

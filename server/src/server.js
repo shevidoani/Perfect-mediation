@@ -3,10 +3,12 @@ const express = require('express');
 const cors = require('cors');
 dotenv.config({ path: "../.env" });
 const usersRouter = require('./routes/usersRauter');
-const apartmentsRouter = require('./routes/apartmentsRauter');
-const apartmentsWaitingRouter = require('./routes/apartmentsWaitingRouter');
-const filteringRouter = require('./routes/filteringRouter');
-const imagesRouter = require('./routes/imagesRouter');
+// const apartmentsRouter = require('./routes/apartmentsRauter');
+// const apartmentsWaitingRouter = require('./routes/apartmentsWaitingRouter');
+// const filteringRouter = require('./routes/filteringRouter');
+// const imagesRouter = require('./routes/imagesRouter');
+const loginsRouter = require('./routes/loginRaurer');
+//const signupRouter = require('./routes/signupRauter');
 
 const host = "127.0.0.1";
 const port = 3336;
@@ -16,10 +18,12 @@ server.use(cors());
 server.use(bodyParser.json())
 server.use(express.urlencoded({ extended: true }));
 server.use("/api/users", usersRouter);
-server.use("/api/apartments", apartmentsRouter);
-server.use("/api/apartmentsWaiting", apartmentsWaitingRouter);
-server.use("/api/filtering", filteringRouter);
-server.use("/api/images", imagesRouter);
+server.use("/api/login", loginsRouter);
+//server.use("/api/signup", signupRouter);
+// server.use("/api/apartments", apartmentsRouter);
+// server.use("/api/apartmentsWaiting", apartmentsWaitingRouter);
+// server.use("/api/filtering", filteringRouter);
+// server.use("/api/images", imagesRouter);
 
 server.use((cors({ origin: 'http://localhost:5173' })));
 
