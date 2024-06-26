@@ -1,11 +1,11 @@
 //import dotenv from 'dotenv';
 const express = require('express');
-const signupController = require('../Controllers/signup.controller');
+const completeSignupController = require('../Controllers/completeSignup.controller');
 const router = express.Router();
 router.use(express.json());
 
 router.post('/', (req, res, next) => {
-    signupController.signup(req, res, next);
+    completeSignupController.completeSignup(req, res, next);
 });
 
 

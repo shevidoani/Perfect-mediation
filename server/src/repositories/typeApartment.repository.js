@@ -2,7 +2,7 @@ const Repository = require('./repository.js');
 const { pool, resultOfRequest } = require('../dbFunctions.js');
 const bcrypt = require('bcrypt');
 
-class PermissionsRepository extends Repository {
+class TypeApartmentRepository extends Repository {
     constructor() {
         super()
         this.pool = pool();
@@ -12,8 +12,8 @@ class PermissionsRepository extends Repository {
         try {
             const pool = await this.pool;
             const connection = await pool.getConnection();
-            const createPermissionsQuery = `INSERT INTO permissions (type) VALUES (?)`;
-            const [result] = await connection.query(createPermissionsQuery, [data.type]);
+            const createTypeApartmentQuery = `INSERT INTO typeApartment (type) VALUES (?)`;
+            const [result] = await connection.query(createTypeApartmentQuery, [data.type]);
             connection.release();
             if (result.insertId > 0) {
                 return resultOfRequest(false, 0, result.insertId);
@@ -21,7 +21,7 @@ class PermissionsRepository extends Repository {
                 return resultOfRequest(true, 0, 0);
             }
         } catch (error) {
-            console.error('Error creating permissions:', error);
+            console.error('Error creating TypeApartment:', error);
             return resultOfRequest(true, 0, 0);
         }
     }
@@ -29,20 +29,19 @@ class PermissionsRepository extends Repository {
     async getAll() {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const getPermissionsQuery = `SELECT * FROM permissions`;
-        const [result] = await connection.query(getPermissionsQuery);
+        const createTypeApartmentQuery = `SELECT * FROM typeApartment`;
+        const [result] = await connection.query(createTypeApartmentQuery);
         return await resultOfRequest(false, 0, 0, result);
     }
 
     async getById(id) {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const getPermissionsQuery = `SELECT * FROM permissions where id = ${id}`
-        const [result] = await connection.query(getPermissionsQuery)
+        const createTypeApartmentQuery = `SELECT * FROM typeApartment where id= ?`; 
+        const [result] = await connection.query(createTypeApartmentQuery, [id]);
         if (result.length != 0) {
-            return resultOfRequest(false, 0, 0, result)
-        }
-        else {
+            return resultOfRequest(false, 0, 0, result);
+        } else {
             return resultOfRequest(true, 0, 0);
         }
     }
@@ -53,8 +52,8 @@ class PermissionsRepository extends Repository {
             const connection = await pool.getConnection();
             
             // Using parameterized query to avoid SQL injection
-            const getPermissionsQuery = `SELECT * FROM permissions where type = ?`;
-            const [result] = await connection.query(getPermissionsQuery, [type]);
+            const createTypeApartmentQuery = `SELECT * FROM typeApartment where type = ?`;
+            const [result] = await connection.query(createTypeApartmentQuery, [type]);
     
             // Close connection after query execution
             await connection.release();
@@ -69,13 +68,26 @@ class PermissionsRepository extends Repository {
             throw new Error('Failed to fetch permissions');
         }
     }
+
+    // async getPasswordById(id) {
+    //     const pool = await this.pool;
+    //     const connection = await pool.getConnection();
+    //     const getPasswordQuery = `SELECT password FROM typeApartment WHERE id = ?`; 
+    //     const [result] = await connection.query(getPasswordQuery, [id]);
+    //     connection.release();
+    //     if (result.length !== 0) {
+    //         return result[0].password;
+    //     } else {
+    //         throw new Error('Password not found for the provided id');
+    //     }
+    // }
     
 
     async update(data) {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const updatePermissionsQuery = `UPDATE permissions SET ? WHERE id = ?`;
-        const [result] = await connection.query(updatePermissionsQuery, [data, data.id])
+        const createTypeApartmentQuery = `UPDATE typeApartment SET ? WHERE id = ?`;
+        const [result] = await connection.query(createTypeApartmentQuery, [data, data.id])
         if (result.affectedRows > 0) {
             return resultOfRequest(false, result.affectedRows, 0)
         }
@@ -87,8 +99,8 @@ class PermissionsRepository extends Repository {
     async delete(id) {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const deletePermissionsQuery = `DELETE FROM permissions where id = ${id}`
-        const [result] = await connection.query(deletePermissionsQuery);
+        const createTypeApartmentQuery = `DELETE FROM typeApartment where id = ${id}`
+        const [result] = await connection.query(createTypeApartmentQuery);
         if (result.affectedRows > 0) {
             return resultOfRequest(false, result.affectedRows, 0)
         }
@@ -97,8 +109,13 @@ class PermissionsRepository extends Repository {
         }
     }
 }
+// const password = '214940611';
+// const saltRounds = 10;
 
-// const yael = new PermissionsRepository();
-// yael.create({'type': 'manager'});
+// // const my_hash = bcrypt.hashSync(password, saltRounds);
+// // console.log('Hashed password:', my_hash);
 
-module.exports = new PermissionsRepository();
+// const yael = new TypeApartmentRepository();
+// yael.create({'type':'for rent'});
+
+module.exports = new TypeApartmentRepository();

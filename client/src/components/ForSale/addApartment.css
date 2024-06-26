@@ -1,0 +1,50 @@
+/* סגנון כללי ל־input של קובץ */
+#file-upload {
+    display: block; /* הצג את ה־input כבלוק עם רוחב מלא */
+    width: 100%;
+    max-width: 300px; /* רוחב מקסימלי */
+    padding: 10px; /* רווחים פנימיים */
+    margin: 10px 0; /* מרווחים בין האלמנטים */
+    font-size: 16px; /* גודל גופן */
+    border: 2px solid #ccc; /* גבולות סולידיים וגוון קרם */
+    background-color: #f9f9f9; /* רקע קרם */
+    color: #333; /* צבע טקסט כהה */
+    cursor: pointer; /* סמן עכבר כפרט אינטראקטיבי */
+    outline: none; /* גיבוב קווי קו רקע */
+    transition: all 0.3s ease; /* מעבר חלק בזמן */
+  }
+  
+  /* סגנון כאשר יש מעבר עכבר וסימן */
+  #file-upload:hover {
+    border-color: #666; /* שינוי צבע הגבול כשהעכבר עליו */
+  }
+  
+  /* סגנון כאשר האלמנט מתמלא */
+  #file-upload:active,
+  #file-upload:focus {
+    border-color: #3366cc; /* צבע גבול פעיל / ממוקד */
+  }
+  
+  /* סגנון לסימון הקובץ */
+  #file-upload::file-selector-button {
+    font-size: 16px; /* גודל גופן */
+    font-weight: bold; /* גודל קווי */
+    padding: 8px 20px; /* רווחים פנימיים */
+    background-color: #3366cc; /* צבע רקע כחול */
+    color: #fff; /* צבע טקסט לבן */
+    border: none; /* אין גבול */
+    cursor: pointer; /* סמן עכבר כמאפשר */
+    outline: none; /* גיבוב קו רקע */
+    transition: background-color 0.3s ease; /* מעבר חלק בזמן */
+  }
+  
+  /* סגנון כאשר יש מעבר עכבר וסימן */
+  #file-upload::file-selector-button:hover {
+    background-color: #235a9e; /* שינוי צבע רקע בהעברת העכבר */
+  }
+  
+  /* סגנון כאשר הקובץ מעלה */
+  #file-upload::file-selector-button:active {
+    background-color: #1a4561; /* שינוי צבע רקע פעיל */
+  }
+  

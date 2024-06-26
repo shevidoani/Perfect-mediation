@@ -1,7 +1,22 @@
-import React from "react"
+
+import React from "react";
+import logo from '../images/logo.png';
+import './Home.css'; // קובץ ה־CSS שהגדרנו
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-    return (<>
-        <h2>homeeeeeeeeeeeee</h2>
-    </>);
+    const navigate = useNavigate();
+    const [ifCurrentUser, setIfCurrrentUser] = useState(false);
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (!currentUser) {
+        setIfCurrrentUser(true)
+    }
+    return (
+        <>
+            <div className="home-container">
+                <h1>hi {currentUser.name}</h1>
+            </div>
+        </>
+    );
 }

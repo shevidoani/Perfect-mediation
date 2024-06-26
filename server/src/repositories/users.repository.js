@@ -16,6 +16,7 @@ class UsersRepository extends Repository {
             const [result] = await connection.query(createUserQuery, [data.name, data.email]);
             connection.release();
             if (result.insertId > 0) {
+                console.log(resultOfRequest(false, 0, result.insertId));
                 return resultOfRequest(false, 0, result.insertId);
             } else {
                 return resultOfRequest(true, 0, 0);
@@ -58,6 +59,19 @@ class UsersRepository extends Repository {
         else {
             return resultOfRequest(true, 0, 0);
         }
+    }
+
+    async getIfExistsByEmail(email) {
+        const pool = await this.pool;
+        const connection = await pool.getConnection();
+        const createUserQuery = `SELECT * FROM users where email = "${email}"`
+        const [result] = await connection.query(createUserQuery);
+        if (result.length > 0) {
+            return result[0];
+          } else {
+            // אם אין תוצאה, נחזיר null
+            return null;
+          }
     }
 
     async update(data) {
