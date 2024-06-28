@@ -163,28 +163,6 @@ class SignupService {
 
     }
 
-    // async completeSignup(data) {
-    //     try {
-    //         console.log(data);
-    //         const checkPassword = await this.temporaryPasswordsRepository.getById(data.id.temporaryPasswordId);
-    //         console.log(`Checking password for ${JSON.stringify(checkPassword)}`);
-    //         const response= JSON.stringify(checkPassword).data[0];
-    //         if (checkPassword) {
-    //             throw new Error('פרטי ההרשמה אינם ��קינים');
-    //         }
-    //         if (response.password != data.checkPassword) {
-    //             throw new Error('פרטי ההרשמה אינם ��קינים')
-    //         }
-    //         else {
-    //             const getUser = await this.usersRepository.getByEmail(data.email);
-    //             const returnUser = { id: getUser.insertId, name: getUser.name, email: data.email };
-    //             return returnUser;
-    //         }
-    //     }
-    //     catch (error) {
-    //         throw error;
-    //     }
-    // }
 
     async completeSignup(data) {
         try {
@@ -239,6 +217,8 @@ class SignupService {
             throw err;
         }
     }
+
+ 
 
 }
 

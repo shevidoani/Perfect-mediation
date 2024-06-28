@@ -39,7 +39,7 @@ export default function Manager() {
                     Add Manager
                 </NavLink>
                 <NavLink
-                    to='approveApartments'
+                    to='apartmentFetcher'
                     className="manager-link"
                 >
                     Approve Apartments

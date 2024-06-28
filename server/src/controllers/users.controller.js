@@ -1,6 +1,6 @@
 const Controller = require('./controller.js');
 const usersService= require('../services/users.service.js');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 class UsersController extends Controller {
     constructor(service) {
         super(service);

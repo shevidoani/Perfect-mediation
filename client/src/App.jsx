@@ -12,8 +12,11 @@ import Home from "./components/Home";
 import AboutUs from "./components/AboutUs";
 import Menager from "./components/Menager/Menager";
 import AddManager from "./components/Menager/AddManager";
-import ApproveApartments from "./components/Apartments/ApproveApartments";
+import ApartmentFetcher from "./components/Apartments/ApartmentFetcher";
 import AddApartmentForSale from "./components/ForSale/AddApartmentForSale";
+import ApartmentDetail from "./components/Apartments/ApartmentDetail";
+import ApartmentForSaleDetail from "./components/ForSale/ApartmentFotSaleDetail";
+import '@fortawesome/fontawesome-free/css/all.css';
 export default function App() {
   return (
     <>
@@ -29,6 +32,7 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path="forSale" >
               <Route index element={<ForSale />} />
+              <Route path="apartmentForSaleDetail/:id" element={<ApartmentForSaleDetail />} />
               <Route path="addApartmentForSale" element={<AddApartmentForSale />} />
             </Route>
             <Route path="forRent" >
@@ -38,7 +42,10 @@ export default function App() {
             <Route path="manager" >
               <Route index element={<Menager />} />
               <Route path="addManager" element={<AddManager />} />
-              <Route path="approveApartments" element={<ApproveApartments />} />
+              <Route path="apartmentFetcher" >
+              <Route index element={<ApartmentFetcher />} />
+              <Route path="apartmentDetail/:id" element={<ApartmentDetail />} />
+              </Route>
             </Route>
             <Route path="aboutUs" element={<AboutUs />} />
             <Route path="home" element={<Home />} />

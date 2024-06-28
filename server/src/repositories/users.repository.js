@@ -86,29 +86,6 @@ class UsersRepository extends Repository {
             return resultOfRequest(true, 0, 0);
         }
     }
-
-    // async update(data) {
-    //     let connection;
-    //     try {
-    //         const pool = await this.pool;
-    //         connection = await pool.getConnection();
-    //         const createUserQuery = `UPDATE users SET ? WHERE id = ?`;
-    //         const [result] = await connection.query(createUserQuery, [data, data.id]);
-    
-    //         if (result.affectedRows > 0) {
-    //             return resultOfRequest(false, result.affectedRows, 0);
-    //         } else {
-    //             return resultOfRequest(true, 0, 0);
-    //         }
-    //     } catch (error) {
-    //         // טיפול בשגיאה
-    //         return resultOfRequest(true, 0, 0);
-    //     } finally {
-    //         if (connection) {
-    //             connection.release(); // סגור את החיבור לאחר השימוש
-    //         }
-    //     }
-    // }
     
 
     async delete(id) {

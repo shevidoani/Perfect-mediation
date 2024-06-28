@@ -12,63 +12,62 @@
 //     </>);
 // }
 
+
+
 import React, { useState, useEffect } from 'react';
+import ForSaleList from './ForSaleList';
 import { useNavigate } from "react-router-dom";
-const ForSale = ({ id }) => {
-    const [apartment, setApartment] = useState(null);
-    const [loading, setLoading] = useState(true);
+const ForSale = () => {
+    const [apartments, setApartments] = useState([]);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     useEffect(() => {
-        const fetchApartment = async () => {
+        const fetchApartments = async () => {
             try {
-                const response = await fetch(`http://localhost:3336/api/apartments/15`); // Replace with your API endpoint
+                const type='for sale'
+                const response = await fetch(`http://localhost:3336/api/apartments/typeApartment/${type}`);
                 if (!response.ok) {
-                    throw new Error('Failed to fetch apartment');
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                setApartment(data);
-                setLoading(false);
-            } catch (error) {
-                setError(error.message);
+                console.log("API response data:", data); 
+                if (!Array.isArray(data)) {
+                    throw new Error('API did not return an array.');
+                }
+                setApartments(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
                 setLoading(false);
             }
         };
 
-        fetchApartment();
-    }, [id]);
+        fetchApartments();
+    }, []);
 
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    async function addApartmentForSale(){
-                navigate('addApartmentForSale')
-            }
-
-    if (error) {
-        return <p>Error: {error}</p>;
-    }
-
-    if (!apartment) {
-        return <p>Apartment not found</p>;
+    async function addApartmentForSale() {
+        navigate('addApartmentForSale')
     }
 
     return (
         <div>
-            <h2>Apartment Details</h2>
-            <p>City: {apartment.city}</p>
-            <p>Neighborhood: {apartment.neighborhood}</p>
-            <p>Street: {apartment.street}</p>
-            <p>Size: {apartment.size}</p>
-            <p>Price: {apartment.price}</p>
-            <p>Description: {apartment.description}</p>
-            <img src={`data:image/png;base64,${apartment.image.data}`} alt="Apartment" className='image'/>
+            {loading ? (
+                <p>Loading...</p>
+            ) : error ? (
+                <p>Error: {error}</p>
+            ) : (
+                <ForSaleList apartments={apartments} />
+            )}
             <button onClick={addApartmentForSale}>Adding an apartment for sale</button>
         </div>
     );
 };
 
 export default ForSale;
+
+
+
+
 
 

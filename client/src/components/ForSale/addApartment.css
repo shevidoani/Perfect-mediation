@@ -47,4 +47,79 @@
   #file-upload::file-selector-button:active {
     background-color: #1a4561; /* שינוי צבע רקע פעיל */
   }
+
+  .apartment-details-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.apartment-details {
+    display: flex;
+    background-color: rgb(255, 255, 255,0.2);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 100%;
+    /* max-width: 1200px; */
+    margin: 20px;
+}
+
+.apartment-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.apartment-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px 0 0 8px;
+}
+
+.apartment-info {
+    flex: 2;
+    padding: 20px;
+}
+
+.apartment-title {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.apartment-subtitle {
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: #666;
+}
+
+.info-item {
+    margin-bottom: 10px;
+}
+
+.features {
+    margin-top: 20px;
+}
+
+.features .feature {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.features .feature .icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.no-image {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    margin: 20px 0;
+}
+
   

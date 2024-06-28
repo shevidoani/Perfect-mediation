@@ -14,13 +14,4 @@ class UsersService extends service {
     }
 }
 
-// const usersServiceInstance = new UsersService(usersRepository);
-
-// // דוגמה לשימוש בפונקציה getByEmail
-// usersServiceInstance.getByEmail('yael@gmail.com').then(user => {
-//     console.log(user);
-// }).catch(error => {
-//     console.error(error);
-// });
-
 module.exports = new UsersService(usersRepository);

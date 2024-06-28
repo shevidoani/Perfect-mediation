@@ -37,7 +37,7 @@ class TypeCurrentApartmentRepository extends Repository {
     async getById(id) {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const createTypeCurrentApartmentQuery = `SELECT * FROM typeCurrentApartment where id= ?`; 
+        const createTypeCurrentApartmentQuery = `SELECT * FROM typeCurrentApartment where apartmentId= ?`; 
         const [result] = await connection.query(createTypeCurrentApartmentQuery, [id]);
         if (result.length != 0) {
             return resultOfRequest(false, 0, 0, result);

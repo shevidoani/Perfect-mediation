@@ -112,6 +112,6 @@ class UserPermissionsRepository extends Repository {
 }
 
 // const yael = new UserPermissionsRepository();
-// yael.create({ 'idUser': 58, 'idPermission': 1});
+// yael.create({ 'idUser': 166, 'idPermission': 2});
 
 module.exports = new UserPermissionsRepository();

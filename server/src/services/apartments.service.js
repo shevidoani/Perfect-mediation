@@ -1,250 +1,28 @@
-// // // const service = require('./service.js');
-// // // const ApatrmentRepository = require('../repositories/apartments.repository.js');
-// // class ApartmentsService{
-// //     constructor(apatrmentRepository, typeCurrentApartmentRepository, typeApartmentRepository) {
-// //         this.apatrmentRepository = apatrmentRepository;
-// //         this.typeCurrentApartmentRepository = typeCurrentApartmentRepository;
-// //         this.typeApartmentRepository = typeApartmentRepository;
-// //     }
-// //     async createApartment(data) {
-// //         try {
-// //             const apartmentData = {
-// //                 'idUser': data.idUser,
-// //                 'city': data.city,
-// //                 'neighborhood': data.neighborhood,
-// //                 'street': data.street,
-// //                 'size': data.size,
-// //                 'price': data.price,
-// //                 'numberOfRooms': data.numberOfRooms,
-// //                 'description': data.description,
-// //                 'hasElevator': data.hasElevator,
-// //                 'hasParking': data.hasParking,
-// //                 'hasBars': data.hasBars,
-// //                 'hasStorage': data.hasStorage,
-// //                 'hasAirConditioning': data.hasAirConditioning,
-// //                 'hasBalcony': data.hasBalcony,
-// //                 'hasMamad': data.hasMamad,
-// //                 'isAccessible': data.isAccessible,
-// //                 'isFurnished': data.isFurnished,
-// //                 'isApproved': data.isApproved
-// //             };
-// //             const apartmentResponse = this.apatrmentRepository.create(apartmentData);
-// //             if (!apartmentResponse) {
-// //                 throw new Error(`Couldn not create`);
-// //             }
-// //             return apartmentResponse;
-
-// //         }
-// //         catch (err) {
-// //             console.log(err);
-// //         }
-// //     }
-// //     async createTypeApartment(data,id) {
-// //         try {
-// //             const typeId = await this.typeApartmentRepository.getByType(data.type);
-// //             if (!typeId) {
-// //                 throw new Error(`Couldn not create`);
-// //             }
-// //             else {
-// //                 const typeApartmentData = {
-// //                     'apartmentId': id,
-// //                     'typeId': typeId.data[0].id
-// //                 };
-// //                 const typeApartmentResponse = this.typeCurrentApartmentRepository.create(typeApartmentData);
-// //                 if (!typeApartmentResponse) {
-// //                     throw new Error(`Couldn not create`);
-// //                 }
-// //                 return typeApartmentResponse;
-// //             }
-// //         }
-// //         catch (err) {
-// //             console.log(err);
-// //         }
-// //     }
-// //     async addApartment(data) {
-// //         try{
-// //         const apartmentResponse = await this.createApartment(data);
-// //         const typeApartmentResponse = await this.createTypeApartment(data,apartmentResponse.insertId);
-// //         if (!apartmentResponse ||!typeApartmentResponse) {
-// //             throw new Error(`Couldn not create`);
-// //         }
-// //         return apartmentResponse;
-// //         }
-// //         catch(err) {
-// //             throw err;
-// //         }
-// //     }
-// // }
-
-
-// // module.exports = ApartmentsService;
-
-// class ApartmentsService {
-//     constructor(apatrmentRepository, typeCurrentApartmentRepository, typeApartmentRepository) {
-//         this.apatrmentRepository = apatrmentRepository;
-//         this.typeCurrentApartmentRepository = typeCurrentApartmentRepository;
-//         this.typeApartmentRepository = typeApartmentRepository;
-//     }
-
-//     async createApartment(data) {
-//         try {
-//             const apartmentData = {
-//                 'idUser': data.idUser,
-//                 'city': data.city,
-//                 'neighborhood': data.neighborhood,
-//                 'street': data.street,
-//                 'size': data.size,
-//                 'price': data.price,
-//                 'numberOfRooms': data.numberOfRooms,
-//                 'description': data.description,
-//                 'hasElevator': data.hasElevator,
-//                 'hasParking': data.hasParking,
-//                 'hasBars': data.hasBars,
-//                 'hasStorage': data.hasStorage,
-//                 'hasAirConditioning': data.hasAirConditioning,
-//                 'hasBalcony': data.hasBalcony,
-//                 'hasMamad': data.hasMamad,
-//                 'isAccessible': data.isAccessible,
-//                 'isFurnished': data.isFurnished,
-//                 'isApproved': data.isApproved,
-//                 'imageLink': data.imageLink // הוספתי את שדה imageLink
-//             };
-//             const apartmentResponse = await this.apatrmentRepository.create(apartmentData);
-//             if (!apartmentResponse) {
-//                 throw new Error(`Could not create apartment`);
-//             }
-//             return apartmentResponse;
-//         } catch (err) {
-//             console.log(err);
-//             throw err; // לזרוק את השגיאה כדי שנוכל לתפוס אותה ברמת הקריאה
-//         }
-//     }
-
-//     async createTypeApartment(data, id) {
-//         try {
-//             const typeId = await this.typeApartmentRepository.getByType(data.type);
-//             if (!typeId) {
-//                 throw new Error(`Could not get type`);
-//             } else {
-//                 const typeApartmentData = {
-//                     'apartmentId': id,
-//                     'typeId': typeId.data[0].id
-//                 };
-//                 const typeApartmentResponse = await this.typeCurrentApartmentRepository.create(typeApartmentData);
-//                 if (!typeApartmentResponse) {
-//                     throw new Error(`Could not create type apartment`);
-//                 }
-//                 return typeApartmentResponse;
-//             }
-//         } catch (err) {
-//             console.log(err);
-//             throw err; // לזרוק את השגיאה כדי שנוכל לתפוס אותה ברמת הקריאה
-//         }
-//     }
-
-//     async addApartment(data) {
-//         try {
-//             const apartmentResponse = await this.createApartment(data);
-//             const typeApartmentResponse = await this.createTypeApartment(data, apartmentResponse.insertId);
-//             if (!apartmentResponse || !typeApartmentResponse) {
-//                 throw new Error(`Could not create apartment or type apartment`);
-//             }
-//             return apartmentResponse;
-//         } catch (err) {
-//             console.log(err);
-//             throw err;
-//         }
-//     }
-// }
-
-// module.exports = ApartmentsService;
-
-
-// class ApartmentsService {
-//     constructor(apartmentRepository, typeCurrentApartmentRepository, typeApartmentRepository) {
-//         this.apartmentRepository = apartmentRepository;
-//         this.typeCurrentApartmentRepository = typeCurrentApartmentRepository;
-//         this.typeApartmentRepository = typeApartmentRepository;
-//     }
-
-//     async createApartment(data) {
-//         try {
-//             const apartmentData = {
-//                 'idUser': data.idUser,
-//                 'city': data.city,
-//                 'neighborhood': data.neighborhood,
-//                 'street': data.street,
-//                 'size': data.size,
-//                 'price': data.price,
-//                 'numberOfRooms': data.numberOfRooms,
-//                 'description': data.description,
-//                 'hasElevator': data.hasElevator === 'true' ? true : false, // קיבוץ ערך בוליאני
-//                 'hasParking': data.hasParking === 'true' ? true : false,
-//                 'hasBars': data.hasBars === 'true' ? true : false,
-//                 'hasStorage': data.hasStorage === 'true' ? true : false,
-//                 'hasAirConditioning': data.hasAirConditioning === 'true' ? true : false,
-//                 'hasBalcony': data.hasBalcony === 'true' ? true : false,
-//                 'hasMamad': data.hasMamad === 'true' ? true : false,
-//                 'isAccessible': data.isAccessible === 'true' ? true : false,
-//                 'isFurnished': data.isFurnished === 'true' ? true : false,
-//                 'isApproved': data.isApproved === 'true' ? true : false,
-//                 'imageLink': data.imageLink
-//             };
-//             const apartmentResponse = await this.apartmentRepository.create(apartmentData);
-//             if (!apartmentResponse) {
-//                 throw new Error(`Could not create apartment`);
-//             }
-//             return apartmentResponse;
-//         } catch (err) {
-//             console.error('Error creating apartment:', err);
-//             throw err;
-//         }
-//     }
-
-//     async createTypeApartment(data, id) {
-//         try {
-//             const typeId = await this.typeApartmentRepository.getByType(data.type);
-//             if (!typeId) {
-//                 throw new Error(`Could not get type`);
-//             } else {
-//                 const typeApartmentData = {
-//                     'apartmentId': id,
-//                     'typeId': typeId.data[0].id
-//                 };
-//                 const typeApartmentResponse = await this.typeCurrentApartmentRepository.create(typeApartmentData);
-//                 if (!typeApartmentResponse) {
-//                     throw new Error(`Could not create type apartment`);
-//                 }
-//                 return typeApartmentResponse;
-//             }
-//         } catch (err) {
-//             console.error('Error creating type apartment:', err);
-//             throw err;
-//         }
-//     }
-
-//     async addApartment(data) {
-//         try {
-//             const apartmentResponse = await this.createApartment(data);
-//             const typeApartmentResponse = await this.createTypeApartment(data, apartmentResponse.insertId);
-//             if (!apartmentResponse || !typeApartmentResponse) {
-//                 throw new Error(`Could not create apartment or type apartment`);
-//             }
-//             return apartmentResponse;
-//         } catch (err) {
-//             console.error('Error adding apartment:', err);
-//             throw err;
-//         }
-//     }
-// }
-
-// module.exports = ApartmentsService;
-
+const path = require('path');
+const fs = require('fs');
 class ApartmentsService {
     constructor(apartmentRepository, typeCurrentApartmentRepository, typeApartmentRepository) {
         this.apartmentRepository = apartmentRepository;
         this.typeCurrentApartmentRepository = typeCurrentApartmentRepository;
         this.typeApartmentRepository = typeApartmentRepository;
+    }
+
+    async update(data) {
+        try {
+            return this.apartmentRepository.update(data);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    async delete(id) {
+        try {
+            return this.apartmentRepository.delete(id);
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
 
     async createApartment(data) {
@@ -272,9 +50,9 @@ class ApartmentsService {
             };
 
             const apartmentResponse = await this.apartmentRepository.create(apartmentData);
-            if (!apartmentResponse.success) {
-                throw new Error(`Could not create apartment`);
-            }
+            // if (!apartmentResponse.success) {
+            //     throw new Error(`Could not create apartment`);
+            // }
 
             return apartmentResponse;
         } catch (err) {
@@ -285,10 +63,11 @@ class ApartmentsService {
 
     async createTypeApartment(data, id) {
         try {
+            console.log('mhch nv t, gav');
             const typeId = await this.typeApartmentRepository.getByType(data.type);
-            if (!typeId.success) {
-                throw new Error(`Could not get type`);
-            }
+            // if (!typeId.success) {
+            //     throw new Error(`Could not get type`);
+            // }
 
             const typeApartmentData = {
                 apartmentId: id,
@@ -296,9 +75,9 @@ class ApartmentsService {
             };
 
             const typeApartmentResponse = await this.typeCurrentApartmentRepository.create(typeApartmentData);
-            if (!typeApartmentResponse.success) {
-                throw new Error(`Could not create type apartment`);
-            }
+            // if (!typeApartmentResponse.success) {
+            //     throw new Error(`Could not create type apartment`);
+            // }
 
             return typeApartmentResponse;
         } catch (err) {
@@ -312,9 +91,9 @@ class ApartmentsService {
             const apartmentResponse = await this.createApartment(data);
             const typeApartmentResponse = await this.createTypeApartment(data, apartmentResponse.insertId);
 
-            if (!apartmentResponse.success || !typeApartmentResponse.success) {
-                throw new Error(`Could not create apartment or type apartment`);
-            }
+            // if (!apartmentResponse.success || !typeApartmentResponse.success) {
+            //     throw new Error(`Could not create apartment or type apartment`);
+            // }
 
             return {
                 apartment: apartmentResponse,
@@ -326,26 +105,265 @@ class ApartmentsService {
         }
     }
 
+    // async getAllApartments() {
+    //     try {
+    //         const apartmentsResponse = await this.apartmentRepository.getAll();
+    //         return apartmentsResponse;
+    //     } catch (err) {
+    //         console.error('Error getting all apartments:', err);
+    //         throw err;
+    //     }
+    // }
+
     async getAllApartments() {
         try {
+            // קבלת כל הדירות
             const apartmentsResponse = await this.apartmentRepository.getAll();
-            return apartmentsResponse;
+            const apartmentsData = apartmentsResponse.data;
+
+            // בדיקה אם יש דירות
+            if (!apartmentsData || apartmentsData.length === 0) {
+                return [];
+            }
+
+            // הוספת סוג הדירה לכל דירה
+            for (let apartment of apartmentsData) {
+                const typeCurrentApartment = await this.typeCurrentApartmentRepository.getById(apartment.id);
+                if (typeCurrentApartment && typeCurrentApartment.data && typeCurrentApartment.data[0]) {
+                    const typeApartment = await this.typeApartmentRepository.getById(typeCurrentApartment.data[0].typeId);
+                    if (typeApartment && typeApartment.data && typeApartment.data[0]) {
+                        apartment.type = typeApartment.data[0].type;
+                    } else {
+                        apartment.type = 'Unknown';
+                    }
+                } else {
+                    apartment.type = 'Unknown';
+                }
+            }
+
+            return apartmentsData;
         } catch (err) {
             console.error('Error getting all apartments:', err);
             throw err;
         }
     }
-    
+
+
+
     async getApartmentById(id) {
         try {
             const apartmentResponse = await this.apartmentRepository.getById(id);
-            return apartmentResponse;
+            const typeCurrentApartment = await this.typeCurrentApartmentRepository.getById(id);
+            const typeApartment = await this.typeApartmentRepository.getById(typeCurrentApartment.data[0].typeId);
+
+            const apartmentData = apartmentResponse.data;
+            console.log(`apartmentData ${JSON.stringify(apartmentData)}`);
+
+            if (apartmentData) {
+                apartmentData.type = typeApartment.data[0].type;
+            } else {
+                throw new Error(`Apartment with id ${id} not found`);
+            }
+
+            return apartmentData;
         } catch (err) {
             console.error(`Error getting apartment with id ${id}:`, err);
             throw err;
         }
     }
+
+
+
+
+
+    // async getApartmentByIsApproved(isApproved) {
+    //     try {
+    //         const apartmentResponse = await this.apartmentRepository.getByIsApproved(isApproved);
+    //         return apartmentResponse;
+    //     } catch (err) {
+    //         console.error(`Error getting apartment with id ${id}:`, err);
+    //         throw err;
+    //     }
+    // }
+
+    // async getApartmentByIsApproved(isApproved) {
+    //     try {
+    //         const apartmentsResponse = await this.apartmentRepository.getByIsApproved(isApproved);
+    //         if (apartmentsResponse.hasError || !Array.isArray(apartmentsResponse.data)) {
+    //             throw new Error('Invalid response from service: Expected an object with a data array.');
+    //         }
+
+    //         const data = apartmentsResponse.data;
+    //         const apartmentsWithImageData = await Promise.all(data.map(async (apartment) => {
+    //             try {
+    //                 if (apartment.imageLink) {
+    //                     const imagePath = path.join(require('os').homedir(), '', apartment.imageLink);
+    //                     const imageBuffer = await fs.promises.readFile(imagePath);
+    //                     apartment.image = {
+    //                         contentType: 'image/png',
+    //                         data: imageBuffer.toString('base64'),
+    //                         contentLength: imageBuffer.length
+    //                     };
+    //                 }
+    //                 const typeCurrentApartment = await this.typeCurrentApartmentRepository.getById(apartment.id);
+    //                 if (typeCurrentApartment.data && typeCurrentApartment.data.length > 0) {
+    //                     const typeApartment = await this.typeApartmentRepository.getById(typeCurrentApartment.data[0].typeId);
+    //                     apartment.type = typeApartment.data[0].type;
+    //                 } else {
+    //                     apartment.type = null;
+    //                 }
+
+    //                 return apartment;
+    //             } catch (error) {
+    //                 console.error(`Error processing apartment ${apartment.id}:`, error);
+    //                 // Handle error as needed, e.g., return a default object
+    //                 return { ...apartment, image: null, type: null };
+    //             }
+    //         }));
+            
+    //         // console.log('זה Controller 💔🤍💖💓💕');
+    //         return {
+    //             hasError: false,
+    //             affectedRows: apartmentsResponse.affectedRows,
+    //             data: apartmentsWithImageData
+    //         };
+    //     } catch (error) {
+    //         console.error('Error fetching apartments by isApproved:', error);
+    //         throw error;
+    //     }
+    // }
+
+    async getApartmentByIsApproved(isApproved) {
+        try {
+            const apartmentsResponse = await this.apartmentRepository.getByIsApproved(isApproved);
+            if (apartmentsResponse.hasError || !Array.isArray(apartmentsResponse.data)) {
+                throw new Error('Invalid response from service: Expected an object with a data array.');
+            }
+    
+            const data = apartmentsResponse.data;
+            const apartmentsWithImageData = await Promise.all(data.map(async (apartment) => {
+                try {
+                    if (apartment.imageLink) {
+                        const imagePath = path.join(require('os').homedir(), '', apartment.imageLink);
+                        const imageBuffer = await fs.promises.readFile(imagePath);
+                        apartment.image = {
+                            contentType: 'image/png',
+                            data: imageBuffer.toString('base64'),
+                            contentLength: imageBuffer.length
+                        };
+                    }
+                    const typeCurrentApartment = await this.typeCurrentApartmentRepository.getById(apartment.id);
+                    if (typeCurrentApartment.data && typeCurrentApartment.data.length > 0) {
+                        const typeApartment = await this.typeApartmentRepository.getById(typeCurrentApartment.data[0].typeId);
+                        apartment.type = typeApartment.data[0].type;
+                    } else {
+                        apartment.type = null;
+                    }
+    
+                    return apartment;
+                } catch (error) {
+                    console.error(`Error processing apartment ${apartment.id}:`, error);
+                    // Handle error as needed, e.g., return a default object
+                    return { ...apartment, image: null, type: null };
+                }
+            }));
+    
+            return {
+                hasError: false,
+                affectedRows: apartmentsResponse.affectedRows,
+                data: apartmentsWithImageData
+            };
+        } catch (error) {
+            console.error('Error fetching apartments by isApproved:', error);
+            throw error;
+        }
+    }
+
+    async getApartmentsByTypeAndApproval(type) {
+        try {
+            const apartmentsResponse = await this.apartmentRepository.getApartmentsByTypeAndApproval(type);
+            if (apartmentsResponse.hasError || !Array.isArray(apartmentsResponse.data)) {
+                throw new Error('Invalid response from service: Expected an object with a data array.');
+            }
+    
+            const data = apartmentsResponse.data;
+            const apartmentsWithImageData = await Promise.all(data.map(async (apartment) => {
+                try {
+                    if (apartment.imageLink) {
+                        const imagePath = path.join(require('os').homedir(), '', apartment.imageLink);
+                        const imageBuffer = await fs.promises.readFile(imagePath);
+                        apartment.image = {
+                            contentType: 'image/png',
+                            data: imageBuffer.toString('base64'),
+                            contentLength: imageBuffer.length
+                        };
+                    }
+                    const typeCurrentApartment = await this.typeCurrentApartmentRepository.getById(apartment.id);
+                    if (typeCurrentApartment.data && typeCurrentApartment.data.length > 0) {
+                        const typeApartment = await this.typeApartmentRepository.getById(typeCurrentApartment.data[0].typeId);
+                        apartment.type = typeApartment.data[0].type;
+                    } else {
+                        apartment.type = null;
+                    }
+    
+                    return apartment;
+                } catch (error) {
+                    console.error(`Error processing apartment ${apartment.id}:`, error);
+                    // Handle error as needed, e.g., return a default object
+                    return { ...apartment, image: null, type: null };
+                }
+            }));
+    
+            return {
+                hasError: false,
+                affectedRows: apartmentsResponse.affectedRows,
+                data: apartmentsWithImageData
+            };
+        } catch (error) {
+            console.error('Error fetching apartments by isApproved:', error);
+            throw error;
+        }
+    }
+    
+
+    // async getApartmentByIsApproved(isApproved) {
+    //     try {
+    //         const apartmentsResponse = await this.apartmentRepository.getByIsApproved(isApproved);
+
+    //         if (apartmentsResponse.hasError || !Array.isArray(apartmentsResponse.data)) {
+    //             throw new Error('Invalid response from service: Expected an object with a data array.');
+    //         }
+
+    //         const data = apartmentsResponse.data;
+    //         const apartmentsWithImageData = await Promise.all(data.map(async (apartment) => {
+    //             if (apartment.imageLink) {
+    //                 const imagePath = path.join(require('os').homedir(), '', apartment.imageLink);
+    //                 const imageBuffer = await fs.promises.readFile(imagePath);
+    //                 apartment.image = {
+    //                     contentType: 'image/png',
+    //                     data: imageBuffer.toString('base64'),
+    //                     contentLength: imageBuffer.length
+    //                 };
+    //             }
+    //             return apartment;
+    //         }));
+
+    //         return {
+    //             hasError: false,
+    //             affectedRows: apartmentsResponse.affectedRows,
+    //             data: apartmentsWithImageData
+    //         };
+    //     } catch (error) {
+    //         console.error('Error fetching apartments by isApproved:', error);
+    //         throw error;
+    //     }
+    // }
+
+
+
+
 }
+
 
 module.exports = ApartmentsService;
 
