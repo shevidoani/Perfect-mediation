@@ -1,6 +1,8 @@
+
 // import React, { useState } from "react";
-// // import { FileUpload } from 'primereact/fileupload';
+// import { Link, useParams } from 'react-router-dom';
 // import './addApartment.css'
+
 // export default function AddApartmentForSale() {
 //     const [city, setCity] = useState('');
 //     const [neighborhood, setNeighborhood] = useState('');
@@ -18,36 +20,20 @@
 //     const [hasMamad, setHasMamad] = useState(false);
 //     const [isAccessible, setIsAccessible] = useState(false);
 //     const [isFurnished, setIsFurnished] = useState(false);
-// const [selectImage,setSelectedImage] = useState(''); 
+//     const [selectImage, setSelectedImage] = useState(null);
+
 //     async function handleSubmit(e) {
 //         try {
 //             e.preventDefault();
-//             const type = 'for sale';
+
+//             const { type } = useParams();
+//             console.log('tbh ach sutbh');
+
+//             const forType = `for ${type}`;
 //             const isApproved = false;
 //             const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 //             const idUser = currentUser.id;
-//             // const apartmentData = {
-//             //     idUser,
-//             //     city,
-//             //     neighborhood,
-//             //     street,
-//             //     size,
-//             //     price,
-//             //     numberOfRooms,
-//             //     description,
-//             //     hasElevator,
-//             //     hasParking,
-//             //     hasBars,
-//             //     hasStorage,
-//             //     hasAirConditioning,
-//             //     hasBalcony,
-//             //     hasMamad,
-//             //     isAccessible,
-//             //     isFurnished,
-//             //     isApproved,
-//             //     type,
-//             //     // selectImage,
-//             // };
+
 //             const apartmentData = new FormData();
 //             apartmentData.append('idUser', idUser);
 //             apartmentData.append('city', city);
@@ -67,44 +53,39 @@
 //             apartmentData.append('isAccessible', isAccessible);
 //             apartmentData.append('isFurnished', isFurnished);
 //             apartmentData.append('isApproved', isApproved);
-//             apartmentData.append('type', type);
+//             apartmentData.append('type', forType);
 //             if (selectImage) {
 //                 apartmentData.append('image', selectImage);
 //             }
 //             const response = await fetch('http://localhost:3336/api/apartments', {
 //                 method: 'POST',
-//                 body: JSON.stringify(apartmentData),
-//                 headers: {
-//                     'Content-Type': 'application/json; charset=UTF-8',
-//                 },
+//                 body: apartmentData,
 //             });
-
 //             if (!response.ok) {
 //                 const errorResponse = await response.json();
 //                 throw new Error(errorResponse.error || 'Network response was not ok');
 //             }
+
 //             const jsonResponse = await response.json();
 //             console.log(`jsonResponse: ${JSON.stringify(jsonResponse)}`);
 //             console.log(apartmentData);
-//         }
-//         catch (error) {
-//             throw error;
+//         } catch (error) {
+//             console.error(error);
 //         }
 //     };
 
 //     const handleFileChange = (e) => {
 //         const file = e.target.files[0];
 //         if (file.type !== 'image/jpeg' && file.type !== "image/png" && file.type !== "image/gif") {
-//             alert('Please select a image file');
+//             alert('Please select a valid image file');
 //             return;
 //         }
 //         setSelectedImage(file);
 //     };
 
-
 //     return (
 //         <>
-//             <h2>addApartmentForSale</h2>
+//             <h2>Add Apartment For Sale</h2>
 //             <form onSubmit={handleSubmit}>
 //                 <input type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
 //                 <input type="text" placeholder="Neighborhood" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)} />
@@ -157,9 +138,11 @@
 //     );
 // }
 import React, { useState } from "react";
-import './addApartment.css'
+import { useParams } from 'react-router-dom';
+import './addApartment.css';
 
 export default function AddApartmentForSale() {
+    const { type } = useParams(); // הוצא את זה מחוץ לפונקציה handleSubmit
     const [city, setCity] = useState('');
     const [neighborhood, setNeighborhood] = useState('');
     const [street, setStreet] = useState('');
@@ -181,7 +164,9 @@ export default function AddApartmentForSale() {
     async function handleSubmit(e) {
         try {
             e.preventDefault();
-            const type = 'for sale';
+            console.log('Type from URL:', type); // הצגת ה-type מה-URL
+
+            const forType = `for ${type}`;
             const isApproved = false;
             const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
             const idUser = currentUser.id;
@@ -205,16 +190,14 @@ export default function AddApartmentForSale() {
             apartmentData.append('isAccessible', isAccessible);
             apartmentData.append('isFurnished', isFurnished);
             apartmentData.append('isApproved', isApproved);
-            apartmentData.append('type', type);
+            apartmentData.append('type', forType);
             if (selectImage) {
                 apartmentData.append('image', selectImage);
             }
-
             const response = await fetch('http://localhost:3336/api/apartments', {
                 method: 'POST',
                 body: apartmentData,
             });
-
             if (!response.ok) {
                 const errorResponse = await response.json();
                 throw new Error(errorResponse.error || 'Network response was not ok');

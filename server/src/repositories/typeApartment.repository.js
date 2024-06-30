@@ -37,7 +37,7 @@ class TypeApartmentRepository extends Repository {
     async getById(id) {
         const pool = await this.pool;
         const connection = await pool.getConnection();
-        const createTypeApartmentQuery = `SELECT * FROM typeApartment where id= ?`; 
+        const createTypeApartmentQuery = `SELECT * FROM typeApartment where id= ?`;
         const [result] = await connection.query(createTypeApartmentQuery, [id]);
         if (result.length != 0) {
             return resultOfRequest(false, 0, 0, result);
@@ -50,14 +50,10 @@ class TypeApartmentRepository extends Repository {
         try {
             const pool = await this.pool;
             const connection = await pool.getConnection();
-            
-            // Using parameterized query to avoid SQL injection
             const createTypeApartmentQuery = `SELECT * FROM typeApartment where type = ?`;
             const [result] = await connection.query(createTypeApartmentQuery, [type]);
-    
-            // Close connection after query execution
             await connection.release();
-    
+            console.log(`result: ${JSON.stringify(result)}`);
             if (result.length !== 0) {
                 return resultOfRequest(false, 0, 0, result);
             } else {
@@ -81,7 +77,7 @@ class TypeApartmentRepository extends Repository {
     //         throw new Error('Password not found for the provided id');
     //     }
     // }
-    
+
 
     async update(data) {
         const pool = await this.pool;

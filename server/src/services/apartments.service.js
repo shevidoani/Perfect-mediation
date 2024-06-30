@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const { log } = require('util');
 class ApartmentsService {
     constructor(apartmentRepository, typeCurrentApartmentRepository, typeApartmentRepository) {
         this.apartmentRepository = apartmentRepository;
@@ -46,13 +47,9 @@ class ApartmentsService {
                 isAccessible: data.isAccessible === 'true',
                 isFurnished: data.isFurnished === 'true',
                 isApproved: data.isApproved === 'true',
-                imageLink: data.imageLink // קישור לתמונה מגיע ישירות מהקליינט
+                imageLink: data.imageLink
             };
-
             const apartmentResponse = await this.apartmentRepository.create(apartmentData);
-            // if (!apartmentResponse.success) {
-            //     throw new Error(`Could not create apartment`);
-            // }
 
             return apartmentResponse;
         } catch (err) {
@@ -63,22 +60,14 @@ class ApartmentsService {
 
     async createTypeApartment(data, id) {
         try {
-            console.log('mhch nv t, gav');
+            console.log(`data.typeApartment ${data.type}`);
             const typeId = await this.typeApartmentRepository.getByType(data.type);
-            // if (!typeId.success) {
-            //     throw new Error(`Could not get type`);
-            // }
-
+            console.log(`typeId ${JSON.stringify(typeId)}`);
             const typeApartmentData = {
                 apartmentId: id,
                 typeId: typeId.data[0].id
             };
-
             const typeApartmentResponse = await this.typeCurrentApartmentRepository.create(typeApartmentData);
-            // if (!typeApartmentResponse.success) {
-            //     throw new Error(`Could not create type apartment`);
-            // }
-
             return typeApartmentResponse;
         } catch (err) {
             console.error('Error creating type apartment:', err);
@@ -90,11 +79,10 @@ class ApartmentsService {
         try {
             const apartmentResponse = await this.createApartment(data);
             const typeApartmentResponse = await this.createTypeApartment(data, apartmentResponse.insertId);
-
             // if (!apartmentResponse.success || !typeApartmentResponse.success) {
             //     throw new Error(`Could not create apartment or type apartment`);
             // }
-
+console.log(`typeApartmentResponse ${typeApartmentResponse}`);
             return {
                 apartment: apartmentResponse,
                 typeApartment: typeApartmentResponse
@@ -155,16 +143,13 @@ class ApartmentsService {
             const apartmentResponse = await this.apartmentRepository.getById(id);
             const typeCurrentApartment = await this.typeCurrentApartmentRepository.getById(id);
             const typeApartment = await this.typeApartmentRepository.getById(typeCurrentApartment.data[0].typeId);
-
             const apartmentData = apartmentResponse.data;
             console.log(`apartmentData ${JSON.stringify(apartmentData)}`);
-
             if (apartmentData) {
                 apartmentData.type = typeApartment.data[0].type;
             } else {
                 throw new Error(`Apartment with id ${id} not found`);
             }
-
             return apartmentData;
         } catch (err) {
             console.error(`Error getting apartment with id ${id}:`, err);
@@ -220,7 +205,7 @@ class ApartmentsService {
     //                 return { ...apartment, image: null, type: null };
     //             }
     //         }));
-            
+
     //         // console.log('זה Controller 💔🤍💖💓💕');
     //         return {
     //             hasError: false,
@@ -233,13 +218,14 @@ class ApartmentsService {
     //     }
     // }
 
+
+
     async getApartmentByIsApproved(isApproved) {
         try {
             const apartmentsResponse = await this.apartmentRepository.getByIsApproved(isApproved);
             if (apartmentsResponse.hasError || !Array.isArray(apartmentsResponse.data)) {
                 throw new Error('Invalid response from service: Expected an object with a data array.');
             }
-    
             const data = apartmentsResponse.data;
             const apartmentsWithImageData = await Promise.all(data.map(async (apartment) => {
                 try {
@@ -259,7 +245,6 @@ class ApartmentsService {
                     } else {
                         apartment.type = null;
                     }
-    
                     return apartment;
                 } catch (error) {
                     console.error(`Error processing apartment ${apartment.id}:`, error);
@@ -267,7 +252,6 @@ class ApartmentsService {
                     return { ...apartment, image: null, type: null };
                 }
             }));
-    
             return {
                 hasError: false,
                 affectedRows: apartmentsResponse.affectedRows,
@@ -285,7 +269,6 @@ class ApartmentsService {
             if (apartmentsResponse.hasError || !Array.isArray(apartmentsResponse.data)) {
                 throw new Error('Invalid response from service: Expected an object with a data array.');
             }
-    
             const data = apartmentsResponse.data;
             const apartmentsWithImageData = await Promise.all(data.map(async (apartment) => {
                 try {
@@ -305,7 +288,7 @@ class ApartmentsService {
                     } else {
                         apartment.type = null;
                     }
-    
+
                     return apartment;
                 } catch (error) {
                     console.error(`Error processing apartment ${apartment.id}:`, error);
@@ -313,7 +296,7 @@ class ApartmentsService {
                     return { ...apartment, image: null, type: null };
                 }
             }));
-    
+
             return {
                 hasError: false,
                 affectedRows: apartmentsResponse.affectedRows,
@@ -324,7 +307,7 @@ class ApartmentsService {
             throw error;
         }
     }
-    
+
 
     // async getApartmentByIsApproved(isApproved) {
     //     try {

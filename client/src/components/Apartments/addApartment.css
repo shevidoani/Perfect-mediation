@@ -32,20 +32,20 @@
     padding: 8px 20px; /* רווחים פנימיים */
     background-color: #3366cc; /* צבע רקע כחול */
     color: #fff; /* צבע טקסט לבן */
-    border: none; /* אין גבול */
-    cursor: pointer; /* סמן עכבר כמאפשר */
-    outline: none; /* גיבוב קו רקע */
-    transition: background-color 0.3s ease; /* מעבר חלק בזמן */
+    border: none; 
+    cursor: pointer; 
+    outline: none; 
+    transition: background-color 0.3s ease;
   }
   
-  /* סגנון כאשר יש מעבר עכבר וסימן */
+  
   #file-upload::file-selector-button:hover {
-    background-color: #235a9e; /* שינוי צבע רקע בהעברת העכבר */
+    background-color: #235a9e;
   }
   
-  /* סגנון כאשר הקובץ מעלה */
+
   #file-upload::file-selector-button:active {
-    background-color: #1a4561; /* שינוי צבע רקע פעיל */
+    background-color: #1a4561; 
   }
 
   .apartment-details-container {

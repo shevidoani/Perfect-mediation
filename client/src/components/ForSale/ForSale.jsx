@@ -47,7 +47,8 @@ const ForSale = () => {
     }, []);
 
     async function addApartmentForSale() {
-        navigate('addApartmentForSale')
+        const type='sale';
+        navigate(`addApartment/${type}`);
     }
 
     return (

@@ -168,11 +168,8 @@ class ApartmentRepository extends Repository {
     }
 
     async getApartmentsByTypeAndApproval(type) {
-        console.log('זה Controller 🥟🥪🥙🧀🥗🍟');
-    
         const pool = await this.pool;
         const connection = await pool.getConnection();
-    
         try {
             const getApartmentsQuery = `
                 SELECT a.*
@@ -182,16 +179,12 @@ class ApartmentRepository extends Repository {
                 WHERE ta.type = ? AND a.isApproved = 1
             `;
             const [results] = await connection.query(getApartmentsQuery, [type]);
-    
             connection.release();
-    
             if (results.length > 0) {
                 const apartments = results.map(apartment => {
                     apartment.imageUrl = `${process.env.BASE_URL}/uploads/${apartment.imageLink}`;
                     return apartment;
                 });
-                console.log('זה Controller 🍃🍃🍃');
-    
                 return resultOfRequest(false, 0, 0, apartments);
             } else {
                 return resultOfRequest(true, 0, 0);

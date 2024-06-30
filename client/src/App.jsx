@@ -13,9 +13,10 @@ import AboutUs from "./components/AboutUs";
 import Menager from "./components/Menager/Menager";
 import AddManager from "./components/Menager/AddManager";
 import ApartmentFetcher from "./components/Apartments/ApartmentFetcher";
-import AddApartmentForSale from "./components/ForSale/AddApartmentForSale";
+import AddApartment from "./components/Apartments/AddApartment";
 import ApartmentDetail from "./components/Apartments/ApartmentDetail";
 import ApartmentForSaleDetail from "./components/ForSale/ApartmentFotSaleDetail";
+import ApartmentForRentDetail from "./components/ForRent/ApartmentForRentDetail";
 import '@fortawesome/fontawesome-free/css/all.css';
 export default function App() {
   return (
@@ -33,11 +34,12 @@ export default function App() {
             <Route path="forSale" >
               <Route index element={<ForSale />} />
               <Route path="apartmentForSaleDetail/:id" element={<ApartmentForSaleDetail />} />
-              <Route path="addApartmentForSale" element={<AddApartmentForSale />} />
+              <Route path="addApartment/:type" element={<AddApartment />} />
             </Route>
             <Route path="forRent" >
               <Route index element={<ForRent />} />
-              {/* <Route path=":postId/comments" element={<Comments />} /> */}
+              <Route path="apartmentForRentDetail/:id" element={<ApartmentForRentDetail />} />
+              <Route path="addApartment/:type" element={<AddApartment />} />
             </Route>
             <Route path="manager" >
               <Route index element={<Menager />} />
